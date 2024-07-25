@@ -12,8 +12,6 @@ rule Ransomware_ShadowRoot
         sha256_2 = "1C9629AEB0E6DBE48F9965D87C64A7B8750BBF93"
 
     strings:
-        $sha256_1 = "CD8FBF0DCDD429C06C80B124CAF574334504E99A" fullword
-        $sha256_2 = "1C9629AEB0E6DBE48F9965D87C64A7B8750BBF93" fullword
         $download_url = "hxxps://raw[.]githubusercontent[.]com/kurumsaltahsilat/detayfatura/main/PDF.FaturaDetay_202407.exe" nocase
         $email_1 = "ram_master_som[@]proton[.]me" nocase wide
         $email_2 = "lasmuruk[@]mailfence[.]com" nocase wide
@@ -28,8 +26,8 @@ rule Ransomware_ShadowRoot
     condition:
         uint16(0) == 0x5A4D and
         (
-            $sha256_1 or
-            $sha256_2 or
+            sha256(0, filesize) == "CD8FBF0DCDD429C06C80B124CAF574334504E99A" or
+            sha256(0, filesize) == "1C9629AEB0E6DBE48F9965D87C64A7B8750BBF93" or
             $download_url or
             $email_1 or
             $email_2 or
