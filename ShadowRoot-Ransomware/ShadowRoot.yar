@@ -8,8 +8,8 @@ rule Ransomware_ShadowRoot
         date = "2024-07-18"
         reference = "https://www.forcepoint.com/blog/x-labs/shadowroot-ransomware-targeting-turkish-businesses"
         copyright = "InfoSEC"
-        sha256_1 = "CD8FBF0DCDD429C06C80B124CAF574334504E99A"
-        sha256_2 = "1C9629AEB0E6DBE48F9965D87C64A7B8750BBF93"
+        sha1_1 = "6f9c3f5d9a1cba63b56d25112efcb3a89e1df7ad"
+        sha1_2 = "bd5b0bc9f3a9150f3a972d495b1d1ac34e1bfed3"
 
     strings:
         $download_url = "hxxps://raw[.]githubusercontent[.]com/kurumsaltahsilat/detayfatura/main/PDF.FaturaDetay_202407.exe" nocase
@@ -26,8 +26,8 @@ rule Ransomware_ShadowRoot
     condition:
         uint16(0) == 0x5A4D and
         (
-            sha256(0, filesize) == "CD8FBF0DCDD429C06C80B124CAF574334504E99A" or
-            sha256(0, filesize) == "1C9629AEB0E6DBE48F9965D87C64A7B8750BBF93" or
+            sha1(0, filesize) == "6f9c3f5d9a1cba63b56d25112efcb3a89e1df7ad" or
+            sha1(0, filesize) == "bd5b0bc9f3a9150f3a972d495b1d1ac34e1bfed3" or
             $download_url or
             $email_1 or
             $email_2 or
