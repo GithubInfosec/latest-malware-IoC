@@ -1,0 +1,44 @@
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"ET STEALER Android Device Potential Malicious Activity"; 
+    flow:established,to_server; 
+    urilen:13; 
+    http.method; content:"GET"; 
+    http.uri; content:"/generate_204"; fast_pattern; endswith; 
+    http.host; content:"connectivitycheck.gstatic.com"; 
+    http.accept_enc; content:"gzip"; depth:4; endswith; 
+    http.header_names; content:!"Cache"; content:!"Referer"; 
+    classtype:stealer-activity; 
+    sid:2036220; rev:1; 
+    metadata:affected_product Android, attack_target Mobile_Client, created_at 2024_08_03, deployment Perimeter, deployment Internal, performance_impact Low, signature_severity Medium, tag Connectivity_Check;
+)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"ET STEALER Android Device C2 Communication"; 
+    flow:established,to_server; 
+    http.host; content:"proxicoin.org"; nocase; 
+    http.host; content:"sh2gote.org"; nocase; 
+    http.host; content:"ht7joxar.org"; nocase; 
+    http.host; content:"dt6remosa.org"; nocase; 
+    http.host; content:"jr2mutef.org"; nocase; 
+    http.host; content:"pingsafe.org"; nocase; 
+    http.host; content:"grobrothers.org"; nocase; 
+    http.host; content:"greendeff.org"; nocase; 
+    http.host; content:"vi6jolifd.org"; nocase; 
+    http.host; content:"campriority.org"; nocase; 
+    http.host; content:"badeskot.com"; nocase; 
+    http.host; content:"6srvfcm.com"; nocase; 
+    classtype:stealer-activity; 
+    sid:2036221; rev:1; 
+    metadata:affected_product Android, attack_target Mobile_Client, created_at 2024_08_03, deployment Perimeter, deployment Internal, performance_impact Low, signature_severity High, tag C2_Communication;
+)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"ET STEALER Android Device Suspicious APK Download"; 
+    flow:established,to_server; 
+    http.uri; content:".apk"; fast_pattern; endswith; 
+    http.host; content:"campriority.org"; nocase; 
+    http.host; content:"badeskot.com"; nocase; 
+    classtype:stealer-activity; 
+    sid:2036222; rev:1; 
+    metadata:affected_product Android, attack_target Mobile_Client, created_at 2024_08_03, deployment Perimeter, deployment Internal, performance_impact Low, signature_severity High, tag APK_Download;
+)
